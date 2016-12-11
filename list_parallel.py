@@ -72,10 +72,8 @@ car_links = None
 cars_info = []
 cars_links = get_listing('https://www.olx.com.pk/cars/')
 
-p = Pool(10)  # Pool tells how many at a time
-records = p.map(parse, cars_links)
-p.terminate()
-p.join()
+with Pool(10) as p:
+    records = p.map(parse, cars_links)
 
 if len(records) > 0:
     with open('data_parallel.csv', 'a+') as f:
